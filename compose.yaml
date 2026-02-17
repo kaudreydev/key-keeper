@@ -7,24 +7,26 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
-services: 
-  frontend:
-    container_name: frontend
-    build:
-      context: . #if your Dockerfile is not at the same level change the path here (./frontend)
-      target: dev
-    restart: always
-    command: pnpm run dev
-    environment:
-      - NODE_ENV=development 
-      #if you’re using Windows, you may need to uncomment the next line - Sol from @Kobe E
-      #- WATCHPACK_POLLING=true
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
-    ports:
-      - 3000:3000
+services:
+    frontend:
+        container_name: frontend
+        build:
+            context: . #if your Dockerfile is not at the same level change the path here (./frontend)
+            target: dev
+        restart: always
+        command: pnpm run dev
+        environment:
+            - NODE_ENV=development
+            #if you’re using Windows, you may need to uncomment the next line - Sol from @Kobe E
+            #- WATCHPACK_POLLING=true
+        volumes:
+            - .:/app
+            - /app/node_modules
+            - /app/.next
+        ports:
+            - 3000:3000
+            - 9229:9229
+            - 9230:9230
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
