@@ -1,16 +1,10 @@
-import { Pool } from "pg";
-import { Game } from "../models/game";
+"use server";
 
-const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DATABASE,
-    password: process.env.POSTGRES_PASSWORD,
-    port: parseInt(process.env.POSTGRES_PORT || "5432"),
-});
+import { Game } from "../models/game";
+import { createPool } from "../api";
 
 export const getGames = async (): Promise<Game[]> => {
+    const pool = await createPool();
     console.log(
         `User: ${pool.options.user}; /
         Host: ${pool.options.host}; /

@@ -1,0 +1,6 @@
+# syntax=docker/dockerfile:1
+
+# Initialize database
+
+FROM postgres:18
+COPY seed.sql /docker-entrypoint-initdb.d/
