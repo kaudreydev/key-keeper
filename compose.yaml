@@ -13,6 +13,7 @@ services:
         build:
             context: . #if your Dockerfile is not at the same level change the path here (./frontend)
             target: dev
+            dockerfile: Dockerfile.frontend
         restart: always
         command: pnpm run dev
         environment:
@@ -27,6 +28,41 @@ services:
             - 3000:3000
             - 9229:9229
             - 9230:9230
+        secrets:
+            - db-password
+        depends_on:
+            database:
+                condition: service_healthy
+    database:
+        container_name: postgres_db
+        build:
+            context: . #if your Dockerfile is not at the same level change the path here (./database)
+            dockerfile: Dockerfile.database
+        image: postgres
+        restart: always
+        user: postgres
+        secrets:
+            - db-password
+        volumes:
+            - db-data:/var/lib/postgresql/
+        environment:
+            - POSTGRES_HOST=host.docker.internal
+            - POSTGRES_USER=kk_api_user
+            - POSTGRES_DATABASE=keykeeper
+            - POSTGRES_PORT=5432
+            - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+        expose:
+            - 5432
+        healthcheck:
+            test: ["CMD", "pg_isready"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+volumes:
+    db-data:
+secrets:
+    db-password:
+        file: db/password.txt
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

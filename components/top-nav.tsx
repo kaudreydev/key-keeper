@@ -1,25 +1,22 @@
 "use client";
 
-import * as React from "react";
+import { ModeToggle } from "./ui/mode-toggle";
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
 } from "./ui/navigation-menu";
-import { ModeToggle } from "./ui/mode-toggle";
 
 export function TopNav() {
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <NavigationMenuLink>Link</NavigationMenuLink>
-                    </NavigationMenuContent>
+                    <NavigationMenuLink href="/">Home</NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuLink href="/games">Games</NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <ModeToggle />
